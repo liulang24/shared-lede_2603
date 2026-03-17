@@ -9,6 +9,9 @@
 #
 name: build immortalwrt
 
+permissions:
+  contents: write
+
 on:
   workflow_dispatch:
     inputs:
