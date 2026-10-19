@@ -38,31 +38,31 @@ url = 'https://github.com/Ausaci/luci-app-nat6-helper.git'
 [application.luci-app-alist]
 url = 'https://github.com/sbwml/luci-app-alist.git'
 
-# [application.luci-app-xray]
-# url = 'https://github.com/yichya/luci-app-xray.git'
-# path = '$b_dir/luci-app-xray'
-# rsync = [
-#     'rsync -a --delete $path/core/ $supply_dir/luci-app-xray-core/',
-#     'rsync -a --delete $path/status/ $supply_dir/luci-app-xray-status/']
+[application.luci-app-xray]
+url = 'https://github.com/yichya/luci-app-xray.git'
+path = '$b_dir/luci-app-xray'
+rsync = [
+    'rsync -a --delete $path/core/ $supply_dir/luci-app-xray-core/',
+    'rsync -a --delete $path/status/ $supply_dir/luci-app-xray-status/']
 
-# [application.pw-dependencies]
-# url = 'https://github.com/xiaorouji/openwrt-passwall-packages.git'
-# path = '$supply_dir/pw-dependencies'
+[application.pw-dependencies]
+url = 'https://github.com/xiaorouji/openwrt-passwall-packages.git'
+path = '$supply_dir/pw-dependencies'
 
-# [application.luci-app-passwall]
-# url = 'https://github.com/xiaorouji/openwrt-passwall.git'
-# path = '$b_dir/openwrt-passwall'
-# rsync = 'rsync -a --delete $path/luci-app-passwall/ $supply_dir/luci-app-passwall/'
+[application.luci-app-passwall]
+url = 'https://github.com/xiaorouji/openwrt-passwall.git'
+path = '$b_dir/openwrt-passwall'
+rsync = 'rsync -a --delete $path/luci-app-passwall/ $supply_dir/luci-app-passwall/'
 
-# [application.luci-app-passwall2]
-# url = 'https://github.com/xiaorouji/openwrt-passwall2.git'
-# path = '$b_dir/openwrt-passwall2'
-# rsync = 'rsync -a --delete $path/luci-app-passwall2/ $supply_dir/luci-app-passwall2/'
+[application.luci-app-passwall2]
+url = 'https://github.com/xiaorouji/openwrt-passwall2.git'
+path = '$b_dir/openwrt-passwall2'
+rsync = 'rsync -a --delete $path/luci-app-passwall2/ $supply_dir/luci-app-passwall2/'
 
-# [application.luci-app-openclash]
-# url = 'https://github.com/vernesong/OpenClash.git'
-# path = '$b_dir/openclash'
-# rsync = 'rsync -a --delete $path/luci-app-openclash/ $supply_dir/luci-app-openclash/'
+[application.luci-app-openclash]
+url = 'https://github.com/vernesong/OpenClash.git'
+path = '$b_dir/openclash'
+rsync = 'rsync -a --delete $path/luci-app-openclash/ $supply_dir/luci-app-openclash/'
 
 [application.set]
 openwrt-packages.url = 'https://github.com/kenzok8/openwrt-packages.git'
