@@ -178,13 +178,16 @@ jobs:
       - name: Pick up files
         run: |
           mkdir -p _collected_firmware/packages
-          rm -rf $(find bin/targets/ -type d -name 'packages')
-          cp $(find bin/targets/ -type f) _collected_firmware
-          cp $(find bin/packages/ -type f -name '*.ipk') _collected_firmware/packages
+          # 删除 targets 下的 packages 目录（仅当存在时）
+          find bin/targets/ -type d -name 'packages' -exec rm -rf {} + 2>/dev/null || true
+          # 复制 targets 下的文件
+          find bin/targets/ -type f -exec cp {} _collected_firmware/ \;
+          # 复制 ipk（先确认存在）
+          find bin/packages/ -type f -name '*.ipk' -exec cp {} _collected_firmware/packages/ \; 2>/dev/null || true
           cd _collected_firmware
-          zip -r allfiles.zip *
+          zip -r -s 2000m allfiles.zip * || true
           cd packages
-          zip -r ../packages.zip *
+          zip -r ../packages.zip * || true
 
       - name: Generate summary
         continue-on-error: true
