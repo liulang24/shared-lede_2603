@@ -29,8 +29,8 @@
 # login_pwd = "00009999"
 #
 #########################
-board = "TP-Link"
-subtarget = "TL-WR740N v5"
+board = "qca"
+subtarget = "ar9331"
 device = "tplink,tl-wr740n-v5"
 base = "https://git.openwrt.org/openwrt/openwrt.git@master"
 
