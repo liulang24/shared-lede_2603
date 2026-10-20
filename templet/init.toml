@@ -28,10 +28,10 @@
 # login_ip = "192.168.21.1"
 # login_pwd = "00009999"
 #
-#
-board = "qualcommax"
-subtarget = "ipq807x"
-device = "xiaomi_ax9000"
+#########################
+board = "TP-Link"
+subtarget = "TL-WR740N v5"
+device = "tplink,tl-wr740n-v5"
 base = "https://git.openwrt.org/openwrt/openwrt.git@master"
 
 device_name = "xiaomi ax9000"
