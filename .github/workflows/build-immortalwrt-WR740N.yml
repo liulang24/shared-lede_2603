@@ -7,7 +7,7 @@
 #
 # The firmware code comes from immortalwrt
 #
-name: build immortalwrt
+name: build immortalwrt WR740N
 
 on:
   workflow_dispatch:
