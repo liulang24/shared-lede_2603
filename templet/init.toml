@@ -27,3 +27,21 @@ git_app = [
 ]
 login_ip = "192.168.21.1"
 login_pwd = "00009999"
+#
+#
+board = "qualcommax"
+subtarget = "ipq807x"
+device = "xiaomi_ax9000"
+base = "https://git.openwrt.org/openwrt/openwrt.git@master"
+
+device_name = "xiaomi ax9000"
+app_path = "package/_supply_packages"
+git_app = [
+  "https://github.com/jerrykuku/luci-theme-argon.git",
+  "https://github.com/jerrykuku/luci-app-argon-config.git",
+  "https://github.com/xiaorouji/openwrt-passwall-packages.git@@pw-dependencies",
+  "https://github.com/xiaorouji/openwrt-passwall.git",
+  "https://github.com/xiaorouji/openwrt-passwall2.git"
+]
+login_ip = "192.168.21.1"
+login_pwd = "00009999"
