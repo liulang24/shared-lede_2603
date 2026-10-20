@@ -31,7 +31,7 @@
 #########################
 board = "qca"
 subtarget = "ar9331"
-device = "tplink,tl-wr740n-v5"
+device = "tplink_tl-wr740n-v5"
 base = "https://git.openwrt.org/openwrt/openwrt.git@master"
 
 device_name = "tplink tl-wr740n-v5"
