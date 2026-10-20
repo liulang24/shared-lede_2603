@@ -34,7 +34,7 @@ subtarget = "ar9331"
 device = "tplink,tl-wr740n-v5"
 base = "https://git.openwrt.org/openwrt/openwrt.git@master"
 
-device_name = "xiaomi ax9000"
+device_name = "tplink tl-wr740n-v5"
 app_path = "package/_supply_packages"
 git_app = [
   "https://github.com/jerrykuku/luci-theme-argon.git",
