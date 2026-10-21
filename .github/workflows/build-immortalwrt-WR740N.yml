@@ -1,3 +1,125 @@
+
+
+
+
+
+#
+# Copyright (C) 2022-2024 hugcabbage <fengsongtianxia@gmail.com>
+#
+# This is free software, licensed under the MIT License.
+#
+# <https://github.com/hugcabbage/shared-lede>
+#
+# The firmware code comes from immortalwrt
+#
+name: build immortalwrt WR740N
+
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: '选择设备'
+        required: true
+        type: choice
+        options:
+          - 'qihoo-c301'
+      branch:
+        description: '选择版本'
+        required: true
+        type: choice
+        options:
+          - 'openwrt-25.12'
+          - 'openwrt-24.10'
+          - 'openwrt-23.05'
+          - 'openwrt-21.02'
+          - 'master'
+      latest_tag:
+        description: '切换到最近稳定版本(master版本无)'
+        required: false
+        type: boolean
+      lan_ipad:
+        description: '设置LAN口IP地址(会覆盖modify脚本中的设置)'
+        required: false
+        default: ''
+        type: string
+      login_pwd:
+        description: '设置初始登陆密码(会覆盖modify脚本中的设置)'
+        required: false
+        default: ''
+        type: string
+      record:
+        description: '输入版本描述'     
+        required: false
+        default: '升级内容：内核升级，更新应用版本'
+        type: string
+      release:
+        description: '上传到release'
+        required: false
+        default: true
+        type: boolean
+      artifact:
+        description: '上传到artifact'
+        required: false
+        type: boolean
+
+permissions:
+  contents: write
+
+jobs:
+  to-build:
+    name: build
+    runs-on: ubuntu-latest
+    env:
+      EXTRA_STR: _some
+    steps:
+
+      - name: Hide sensitive inputs
+        if: github.event_name == 'workflow_dispatch'
+        uses: hugcabbage/action-hide-sensitive-inputs@v1
+        with:
+          include_inputs: login_pwd
+
+      - name: Display initial disk space
+        run: |
+          df -h
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ${{ env.EXTRA_STR }}
+
+      - name: Prepare environments
+        env:
+          REQUIREMENTS: ${{ env.EXTRA_STR }}/extra-files/requirements-transit.txt
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install gcc-multilib gettext
+          sudo apt-get clean
+          pip3 install -r $REQUIREMENTS
+
+      - name: Prepare deployment
+        id: prepare-deployment
+        env:
+          MODEL_NAME: ${{ inputs.model }}
+          BRANCH_NAME: ${{ inputs.branch }}
+          LATEST_TAG: ${{ inputs.latest_tag }}
+          LOGIN_IP: ${{ inputs.lan_ipad }}
+          LOGIN_PWD: ${{ inputs.login_pwd }}
+          TEMP_PREFIX: ${{ env.EXTRA_STR }}
+          DEPLOY_DIR: ${{ env.EXTRA_STR }}/preset-immortalwrt
+          TRANSIT_PY: ${{ env.EXTRA_STR }}/extra-files/transit.py
+        run: |
+          chmod +x $TRANSIT_PY
+          $TRANSIT_PY
+
+      - name: Clone sources
+        env:
+          CLONE_SH: ${{ steps.prepare-deployment.outputs.clone_sh }}
+        run: |
+          chmod +x $CLONE_SH
+          $CLONE_SH
+
+
 # ========== WR740N v5 硬改16M：DTS、设备定义、网口board、LAN/24配置 ==========
 cd immortalwrt
 
@@ -129,122 +251,6 @@ chmod +x files/etc/uci-defaults/99-set-lan-24
 
 
 
-
-#
-# Copyright (C) 2022-2024 hugcabbage <fengsongtianxia@gmail.com>
-#
-# This is free software, licensed under the MIT License.
-#
-# <https://github.com/hugcabbage/shared-lede>
-#
-# The firmware code comes from immortalwrt
-#
-name: build immortalwrt WR740N
-
-on:
-  workflow_dispatch:
-    inputs:
-      model:
-        description: '选择设备'
-        required: true
-        type: choice
-        options:
-          - 'qihoo-c301'
-      branch:
-        description: '选择版本'
-        required: true
-        type: choice
-        options:
-          - 'openwrt-25.12'
-          - 'openwrt-24.10'
-          - 'openwrt-23.05'
-          - 'openwrt-21.02'
-          - 'master'
-      latest_tag:
-        description: '切换到最近稳定版本(master版本无)'
-        required: false
-        type: boolean
-      lan_ipad:
-        description: '设置LAN口IP地址(会覆盖modify脚本中的设置)'
-        required: false
-        default: ''
-        type: string
-      login_pwd:
-        description: '设置初始登陆密码(会覆盖modify脚本中的设置)'
-        required: false
-        default: ''
-        type: string
-      record:
-        description: '输入版本描述'     
-        required: false
-        default: '升级内容：内核升级，更新应用版本'
-        type: string
-      release:
-        description: '上传到release'
-        required: false
-        default: true
-        type: boolean
-      artifact:
-        description: '上传到artifact'
-        required: false
-        type: boolean
-
-permissions:
-  contents: write
-
-jobs:
-  to-build:
-    name: build
-    runs-on: ubuntu-latest
-    env:
-      EXTRA_STR: _some
-    steps:
-
-      - name: Hide sensitive inputs
-        if: github.event_name == 'workflow_dispatch'
-        uses: hugcabbage/action-hide-sensitive-inputs@v1
-        with:
-          include_inputs: login_pwd
-
-      - name: Display initial disk space
-        run: |
-          df -h
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          path: ${{ env.EXTRA_STR }}
-
-      - name: Prepare environments
-        env:
-          REQUIREMENTS: ${{ env.EXTRA_STR }}/extra-files/requirements-transit.txt
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install gcc-multilib gettext
-          sudo apt-get clean
-          pip3 install -r $REQUIREMENTS
-
-      - name: Prepare deployment
-        id: prepare-deployment
-        env:
-          MODEL_NAME: ${{ inputs.model }}
-          BRANCH_NAME: ${{ inputs.branch }}
-          LATEST_TAG: ${{ inputs.latest_tag }}
-          LOGIN_IP: ${{ inputs.lan_ipad }}
-          LOGIN_PWD: ${{ inputs.login_pwd }}
-          TEMP_PREFIX: ${{ env.EXTRA_STR }}
-          DEPLOY_DIR: ${{ env.EXTRA_STR }}/preset-immortalwrt
-          TRANSIT_PY: ${{ env.EXTRA_STR }}/extra-files/transit.py
-        run: |
-          chmod +x $TRANSIT_PY
-          $TRANSIT_PY
-
-      - name: Clone sources
-        env:
-          CLONE_SH: ${{ steps.prepare-deployment.outputs.clone_sh }}
-        run: |
-          chmod +x $CLONE_SH
-          $CLONE_SH
 
       - name: Update feeds
         run: |
