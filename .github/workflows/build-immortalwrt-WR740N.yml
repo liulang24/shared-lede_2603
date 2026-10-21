@@ -1,3 +1,135 @@
+# ========== WR740N v5 硬改16M：DTS、设备定义、网口board、LAN/24配置 ==========
+cd immortalwrt
+
+# 1、写入DTS文件 target/linux/ath79/dts/ar9331_tplink_tl-wr740n-v5_16m.dts
+cat > target/linux/ath79/dts/ar9331_tplink_tl-wr740n-v5_16m.dts <<'EOF'
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+#include "ar9331.dtsi"
+
+/ {
+	model = "TP-Link TL-WR740N v5 (16M Flash Modified)";
+	compatible = "tplink,tl-wr740n-v5", "qca,ar9331";
+
+	aliases {
+		led-boot = &led_system;
+		led-failsafe = &led_system;
+		led-running = &led_system;
+		led-upgrade = &led_system;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led_system: system {
+			label = "tp-link:green:system";
+			gpios = <&gpio 27 GPIO_ACTIVE_LOW>;
+		};
+		wlan {
+			label = "tp-link:green:wlan";
+			gpios = <&gpio 13 GPIO_ACTIVE_LOW>;
+		};
+	};
+};
+
+&spi {
+	status = "okay";
+	flash@0 {
+		compatible = "jedec,spi-nor";
+		reg = <0>;
+		spi-max-frequency = <25000000>;
+
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			partition@0 {
+				label = "u-boot";
+				reg = <0x000000 0x020000>;
+				read-only;
+			};
+			partition@20000 {
+				label = "firmware";
+				reg = <0x020000 0xee0000>;
+			};
+			partition@f00000 {
+				label = "config";
+				reg = <0xf00000 0x010000>;
+				read-only;
+			};
+			partition@f10000 {
+				label = "factory";
+				reg = <0xf10000 0x0f0000>;
+				read-only;
+			};
+		};
+	};
+};
+
+&eth0 {
+	status = "okay";
+	phy-handle = <&phy4>;
+	phy-mode = "mii";
+};
+
+&eth1 {
+	status = "okay";
+};
+
+&switch {
+	status = "okay";
+};
+
+&wmac {
+	status = "okay";
+	qca,ath9k-eeprom-partition = <&factory>;
+};
+EOF
+
+# 2、tplink.mk 添加v5 16M设备定义，IMAGE_SIZE=14M
+cat >> target/linux/ath79/image/tplink.mk <<'EOF'
+define Device/tplink_tl-wr740n-v5-16m
+  $(Device/tplink)
+  SOC := ar9331
+  DEVICE_VENDOR := TP-Link
+  DEVICE_MODEL := TL-WR740N
+  DEVICE_VARIANT := v5 16M(hardmod)
+  DEVICE_DTS := ar9331_tplink_tl-wr740n-v5_16m
+  IMAGE_SIZE := 14336k
+  TPLINK_HWID := 0x07400005
+  TPLINK_HWREV := 0x1
+endef
+TARGET_DEVICES += tplink_tl-wr740n-v5-16m
+EOF
+
+#3、02_network 网口、LED board识别，添加tl-wr740n-v5
+sed -i '/"tplink,tl-wr741nd-v4")/i \
+	"tplink,tl-wr740n-v5") \
+		ucidef_set_interfaces_lan_wan "eth1" "eth0" \
+		ucidef_add_switch "switch0" \
+			"0@eth1" "1:lan" "2:lan" "3:lan" "4:lan" \
+		ucidef_set_led_netdev "wan" "WAN" "tp-link:green:wan" "eth0" \
+		;;' target/linux/ath79/base-files/etc/board.d/02_network
+
+# ========== uci-defaults：LAN 192.168.1.1/24 + DHCP 100~200 ==========
+mkdir -p files/etc/uci-defaults
+cat > files/etc/uci-defaults/99-set-lan-24 <<'EOF'
+#!/bin/sh
+# LAN IP /24
+uci set network.lan.ipaddr='192.168.1.1/24'
+# DHCP 范围：192.168.1.100 ~ 192.168.1.200
+uci set dhcp.lan.start='100'
+uci set dhcp.lan.limit='101'
+uci commit network
+uci commit dhcp
+exit 0
+EOF
+chmod +x files/etc/uci-defaults/99-set-lan-24
+
+
+
+
+
+
 #
 # Copyright (C) 2022-2024 hugcabbage <fengsongtianxia@gmail.com>
 #
