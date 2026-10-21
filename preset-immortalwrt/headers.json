@@ -1,4 +1,5 @@
 {
+  "tplink_tl-wr740n-v5": ["1", "qca", "ar9331", "tplink_tl-wr740n-v5"],
   "qihoo-c301": ["1", "ath79", "generic", "qihoo_c301"],
   "phicomm-k3": ["2", "bcm53xx", "generic", "phicomm_k3"],
   "tenda-ac9": ["1", "bcm53xx", "generic", "tenda_ac9"],
