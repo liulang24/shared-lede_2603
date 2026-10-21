@@ -120,15 +120,14 @@ jobs:
           $CLONE_SH
 
 
-# ========== WR740N v5 硬改16M：DTS、设备定义、网口board、LAN/24配置 ==========
-cd immortalwrt
+    # ========== WR740N v5 硬改16M：DTS、设备定义、网口board、LAN/24配置 ==========
+       cd immortalwrt
 
-# 1、写入DTS文件 target/linux/ath79/dts/ar9331_tplink_tl-wr740n-v5_16m.dts
-cat > target/linux/ath79/dts/ar9331_tplink_tl-wr740n-v5_16m.dts <<'EOF'
+    # 1、写入DTS文件 target/linux/ath79/dts/ar9331_tplink_tl-wr740n-v5_16m.dts
+       cat > target/linux/ath79/dts/ar9331_tplink_tl-wr740n-v5_16m.dts <<'EOF'
 // SPDX-License-Identifier: GPL-2.0-or-later OR MIT
 #include "ar9331.dtsi"
-
-/ {
+     / {
 	model = "TP-Link TL-WR740N v5 (16M Flash Modified)";
 	compatible = "tplink,tl-wr740n-v5", "qca,ar9331";
 
