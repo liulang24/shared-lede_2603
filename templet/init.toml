@@ -30,7 +30,7 @@
 #
 #########################
 board = "ath79"
-subtarget = "ar9331"
+subtarget = "tiny"
 device = "tplink_tl-wr740n-v5"
 base = "https://git.openwrt.org/openwrt/openwrt.git@master"
 
