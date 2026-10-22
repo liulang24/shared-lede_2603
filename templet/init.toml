@@ -34,7 +34,7 @@ subtarget = "tiny"
 device = "tplink_tl-wr740n-v5"
 base = "https://git.openwrt.org/openwrt/openwrt.git@master"
 
-device_name = "tplink tl-wr740n-v5"
+device_name = "tplink_tl-wr740n-v5"
 app_path = "package/_supply_packages"
 git_app = [
   "https://github.com/jerrykuku/luci-theme-argon.git",
