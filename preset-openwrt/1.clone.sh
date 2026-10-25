@@ -33,6 +33,11 @@ git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall.git && mv open
 git clone --depth 1 https://github.com/xiaorouji/openwrt-passwall2.git && mv openwrt-passwall2/luci-app-passwall2 ./ && rm -rf openwrt-passwall2
 git clone --depth 1 https://github.com/vernesong/OpenClash.git && mv OpenClash/luci-app-openclash ./ && rm -rf OpenClash
 #
+#git clone https://github.com/dwfreed/openwrt-vlmcsd.git package/openwrt-vlmcsd
+#git clone https://github.com/dwfreed/luci-app-vlmcsd.git package/luci-app-vlmcsd
+#
+#git clone https://github.com/cokebar/openwrt-vlmcsd.git package/openwrt-vlmcsd
+#git clone https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd
+#
 git clone --depth 1 https://github.com/cokebar/openwrt-vlmcsd.git && mv openwrt-vlmcsd/luci-app-vlmcsd ./ && rm -rf openwrt-vlmcsd
-
-
+#
