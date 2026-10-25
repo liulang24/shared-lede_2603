@@ -39,6 +39,6 @@ git clone --depth 1 https://github.com/sbwml/luci-app-alist.git
 # git clone https://github.com/cokebar/openwrt-vlmcsd.git package/openwrt-vlmcsd
 # git clone https://github.com/cokebar/luci-app-vlmcsd.git package/luci-app-vlmcsd
 #
-git clone --depth 1 https://github.com/cokebar/openwrt-vlmcsd.git
-git clone --depth 1 https://github.com/cokebar/luci-app-vlmcsd.git
+git clone --depth 1 https://github.com/dwfreed/openwrt-vlmcsd.git
+git clone --depth 1 https://github.com/dwfreed/luci-app-vlmcsd.git
 #
