@@ -1,5 +1,7 @@
 {
   "konka-komi-a31": ["2", "mediatek", "filogic", "konka_komi-a31"],
+  "cmcc-rax3000m": ["3", "mediatek", "filogic", "cmcc_rax3000m"],
+  "cmcc-rax3000me": ["3", "mediatek", "filogic", "cmcc_rax3000me"],
   "qihoo-c301": ["1", "ath79", "generic", "qihoo_c301"],
   "phicomm-k3": ["2", "bcm53xx", "generic", "phicomm_k3"],
   "tenda-ac9": ["1", "bcm53xx", "generic", "tenda_ac9"],
