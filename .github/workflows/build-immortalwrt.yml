@@ -17,7 +17,7 @@ on:
         required: true
         type: choice
         options:
-          - 'tplink-wr740n-v5'
+          - 'konka-komi-a31'
           - 'qihoo-c301'
           - 'phicomm-k3'
           - 'tenda-ac9'
