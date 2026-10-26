@@ -18,6 +18,8 @@ on:
         type: choice
         options:
           - 'konka-komi-a31'
+          - 'cmcc-rax3000m'
+          - 'cmcc-rax3000me'
           - 'qihoo-c301'
           - 'phicomm-k3'
           - 'tenda-ac9'
