@@ -155,6 +155,7 @@ jobs:
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
+          ./scripts/feeds install -a -f
 
       - name: Modify configuration
         env:
